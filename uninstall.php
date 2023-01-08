@@ -10,7 +10,7 @@ if (get_option("wpkc_settings_clean_plugin_options_on_uninstall") == 'yes') {
     // DELETES ALL OPTIONS IN THE DB
     $wpdb->query(
         "DELETE FROM $wpdb->options
-       WHERE option_name LIKE 'wwkc_%'
+       WHERE option_name LIKE 'wpkc_%'
       "
     );
 
