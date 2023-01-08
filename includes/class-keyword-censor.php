@@ -1,7 +1,7 @@
 <?php
 /**
- * Setup
- *
+ * Main plugin bootstrap class
+ * 
  * @since   1.0
  */
 
@@ -48,6 +48,12 @@ final class Keyword_Censor
         $this->init_hooks();
     }
 
+    /**
+     * Define all constains here
+     *
+     * @since 1.0
+     * @access public
+     */
     private function define_constants()
     {
 
@@ -72,12 +78,25 @@ final class Keyword_Censor
         }
     }
 
+    /**
+     * Include all plugin class
+     *
+     * @since 1.0
+     * @access public
+     */
     public function includes()
     {
         include_once WPKC_ABSPATH . 'includes/class-wpkc-scripts.php';
         include_once WPKC_ABSPATH . 'includes/class-wpkc-settings.php';
+        include_once WPKC_ABSPATH . 'includes/class-wpkc-features.php';
     }
 
+    /**
+     * Initialize hooks
+     *
+     * @since 1.0
+     * @access public
+     */
     private function init_hooks()
     {
 
@@ -93,8 +112,7 @@ final class Keyword_Censor
     /**
      * Load plugin text domain.
      *
-     * @since 1.2.0
-     * @since 1.3.0 Refactor codebase and move to its dedicated model.
+     * @since 1.0
      * @access public
      */
     public function load_plugin_text_domain()
@@ -107,18 +125,45 @@ final class Keyword_Censor
     /**
      * Ran when any plugin is activated.
      *
-     * @since WooCommerce C
+     * @since 1.0
      * @param string $filename The filename of the activated plugin.
      */
     public function activated_plugin($filename)
     {
 
+        if(get_option('wpkc_field_content_to_filter') == ""){
+            update_option('wpkc_field_content_to_filter', 
+                array(
+                    'title' => 'on',
+                    'content' => 'on',
+                    'excerpt' => 'on',
+                    'comments' => 'on'
+                )
+            );
+        }
+        
+        if(get_option('wpkc_field_case_sensitive') == ""){
+            update_option('wpkc_field_case_sensitive', array('sensitive' => 'on'));
+        }
+        
+        if(get_option('wpkc_field_keyword_rendering') == ""){
+            update_option('wpkc_field_keyword_rendering', 'replace_all');
+        }
+
+        if(get_option('wpkc_field_replace_keyword_with') == ""){
+            update_option('wpkc_field_replace_keyword_with', '*');
+        }
+
+        if(get_option('wpkc_field_apply_changes_on_following_users') == ""){
+            update_option('wpkc_field_apply_changes_on_following_users', array('logged_in' => 'on', 'logged_out' => 'on'));
+        }
+        
     }
 
     /**
      * Ran when any plugin is deactivated.
      *
-     * @since WooCommerce C
+     * @since 1.0
      * @param string $filename The filename of the deactivated plugin.
      */
     public function deactivated_plugin($filename)

@@ -1,16 +1,12 @@
 <?php
 /**
- * Setup
+ * Scripts class
  *
  * @since   1.0
  */
 
 defined('ABSPATH') || exit;
 
-/**
- * Main Class.
- *
- */
 class WPKC_Scripts
 {
 
@@ -43,11 +39,23 @@ class WPKC_Scripts
         add_action('wp_enqueue_scripts', array($this, 'load_front_end_styles_and_scripts'), 11);
     }
 
+    /**
+     * All backend scripts
+     *
+     * @since 1.0
+     * @access public
+     */
     public function load_back_end_styles_and_scripts()
     {
 
     }
 
+    /**
+     * All frontend scripts
+     *
+     * @since 1.0
+     * @access public
+     */
     public function load_front_end_styles_and_scripts()
     {
 

@@ -75,6 +75,7 @@ class WPKC_Settings
      */
     public function keyword_censor_settings_page()
     {
+
         // check user capabilities
         if (!current_user_can('manage_options')) {
             return;
@@ -102,7 +103,7 @@ class WPKC_Settings
                     // (sections are registered for "keyword_censor_settings", each field is registered to a specific section)
                     do_settings_sections('keyword_censor_settings');
                     // output save settings button
-                    submit_button('Save Settings');
+                    submit_button(__('Save Settings', 'wp-keyword-censor'));
                 ?>
             </form>
         </div><?php
@@ -133,15 +134,6 @@ class WPKC_Settings
             'wpkc_settings_section_settings',
         );
 
-        register_setting('keyword_censor_settings', 'wpkc_field_matching');
-        add_settings_field(
-            'wpkc_field_matching',
-            __('Matching', 'wp-keyword-censor'),
-            array($this, 'matching_field_cb'),
-            'keyword_censor_settings',
-            'wpkc_settings_section_settings'
-        );
-
         register_setting('keyword_censor_settings', 'wpkc_field_content_to_filter');
         add_settings_field(
             'wpkc_field_content_to_filter',
@@ -151,11 +143,11 @@ class WPKC_Settings
             'wpkc_settings_section_settings'
         );
 
-        register_setting('keyword_censor_settings', 'wpkc_field_post_types');
+        register_setting('keyword_censor_settings', 'wpkc_field_case_sensitive');
         add_settings_field(
-            'wpkc_field_post_types', 
-            __('Post Types', 'wp-keyword-censor'),
-            array($this, 'post_types_field_cb'),
+            'wpkc_field_case_sensitive', 
+            __('Case-sensitive', 'wp-keyword-censor'),
+            array($this, 'case_sensitive_field_cb'),
             'keyword_censor_settings',
             'wpkc_settings_section_settings'
         );
@@ -169,7 +161,7 @@ class WPKC_Settings
             'wpkc_settings_section_settings'
         );
 
-        register_setting('keyword_censor_settings', 'wpkc_field_replace_keyword_with');
+        register_setting('keyword_censor_settings', 'wpkc_field_replace_keyword_with', array($this, 'sanitize'));
         add_settings_field(
             'wpkc_field_replace_keyword_with', 
             __('Replace keyword with', 'wp-keyword-censor'),
@@ -186,13 +178,26 @@ class WPKC_Settings
             'keyword_censor_settings',
             'wpkc_settings_section_settings'
         );
-        
 
     }
- 
+    
+    /**
+     * Sanitize each setting field as needed
+     *
+     * @param array $input Contains all settings fields as array keys
+     * @since 1.0
+     */
+    public function sanitize($input)
+    {
+        
+        return sanitize_text_field($input);
+
+    }
+
     /**
      * Display keyword field.
      * 
+     * @param array $args Field arguments
      * @since 1.0
      */
     public function keyword_field_cb($args)
@@ -207,39 +212,18 @@ class WPKC_Settings
     }
 
     /**
-     * Display matching field.
-     * 
-     * @since 1.0
-     */
-    public function matching_field_cb($args)
-    {
-        // Get the value of the setting we've registered with register_setting()
-        $option = get_option('wpkc_field_matching'); ?>
-
-        <fieldset>
-            <label>
-                <input type="radio" name="wpkc_field_matching" value="exact" <?php checked($option, 'exact', true); ?>> 
-                <?php echo __('Match the exact keyword', 'wp-keyword-censor'); ?>
-            </label><br>
-            <label>
-                <input type="radio" name="wpkc_field_matching" value="part" <?php checked($option, 'part', true); ?>> 
-                <?php echo __('Match only part of the word or phrase', 'wp-keyword-censor'); ?>
-            </label><br>
-        </fieldset><?php
-
-    }
-
-    /**
      * Display content to filter field
      * 
+     * @param array $args Field arguments
      * @since 1.0
      */
     public function content_to_filter_field_cb($args)
     {
-        // Get the value of the setting we've registered with register_setting()
+        
         $option     = get_option('wpkc_field_content_to_filter'); 
         $title      = isset($option['title']) && !empty($option['title']) ? $option['title'] : '';
         $content    = isset($option['content']) && !empty($option['content']) ? $option['content'] : '';
+        $excerpt    = isset($option['excerpt']) && !empty($option['excerpt']) ? $option['excerpt'] : '';
         $comments   = isset($option['comments']) && !empty($option['comments']) ? $option['comments'] : '';?>
 
         <fieldset>
@@ -253,6 +237,11 @@ class WPKC_Settings
             </label>
         </fieldset>
         <fieldset>
+            <label for="wpkc_field_content_to_filter_excerpt">
+            <input name="wpkc_field_content_to_filter[excerpt]" id="wpkc_field_content_to_filter_excerpt" type="checkbox" <?php checked($excerpt, 'on', true); ?>> <?php echo __('Excerpt', 'wp-keyword-censor'); ?>
+            </label>
+        </fieldset>
+        <fieldset>
             <label for="wpkc_field_content_to_filter_comments">
             <input name="wpkc_field_content_to_filter[comments]" id="wpkc_field_content_to_filter_comments" type="checkbox" <?php checked($comments, 'on', true); ?>> <?php echo __('Comments', 'wp-keyword-censor'); ?>
             </label>
@@ -261,25 +250,20 @@ class WPKC_Settings
     }
 
     /**
-     * Display post types field
+     * Display case-sensitive field
      * 
+     * @param array $args Field arguments
      * @since 1.0
      */
-    public function post_types_field_cb($args)
+    public function case_sensitive_field_cb($args)
     {
         // Get the value of the setting we've registered with register_setting()
-        $option = get_option('wpkc_field_post_types'); 
-        $post      = isset($option['post']) && !empty($option['post']) ? $option['post'] : ''; 
-        $page      = isset($option['page']) && !empty($option['page']) ? $option['page'] : ''; ?>
+        $option     = get_option('wpkc_field_case_sensitive'); 
+        $sensitive  = isset($option['sensitive']) && !empty($option['sensitive']) ? $option['sensitive'] : ''; ?>
 
         <fieldset>
-            <label for="wpkc_field_post_types_post">
-                <input name="wpkc_field_post_types[post]" id="wpkc_field_post_types_post" type="checkbox" class="" <?php checked($post, 'on', true); ?>> <?php echo __('Post', 'wp-keyword-censor'); ?>
-            </label>
-        </fieldset>
-        <fieldset>
-            <label for="wpkc_field_post_types_page">
-                <input name="wpkc_field_post_types[page]" id="wpkc_field_post_types_page" type="checkbox" class="" <?php checked($page, 'on', true); ?>> <?php echo __('Page', 'wp-keyword-censor'); ?>
+            <label for="wpkc_field_case_sensitive">
+                <input name="wpkc_field_case_sensitive[sensitive]" id="wpkc_field_case_sensitive" type="checkbox" <?php checked($sensitive, 'on', true); ?>> <?php echo __('Restrictly match the keywords.', 'wp-keyword-censor'); ?>
             </label>
         </fieldset><?php
 
@@ -288,11 +272,12 @@ class WPKC_Settings
     /**
      * Display keyword rendering field
      * 
+     * @param array $args Field arguments
      * @since 1.0
      */
     public function keyword_rendering_field_cb($args)
     {
-        // Get the value of the setting we've registered with register_setting()
+        
         $option = get_option('wpkc_field_keyword_rendering'); ?>
 
         <fieldset>
@@ -312,14 +297,15 @@ class WPKC_Settings
     /**
      * Display replace keyword with field
      * 
+     * @param array $args Field arguments
      * @since 1.0
      */
     public function replace_keyword_with_field_cb($args)
     {
-        // Get the value of the setting we've registered with register_setting()
+        
         $option = get_option('wpkc_field_replace_keyword_with'); ?>
-
-        <input name="wpkc_replace_keywords_with" id="wpkc_replace_keywords_with" type="text" placeholder="*" style="width: 400px" maxlength="1" value="<?php echo $option; ?>">
+        
+        <input type="text" id="wpkc_field_replace_keyword_with" name="wpkc_field_replace_keyword_with" placeholder="*" style="width: 400px;" maxlength="1" value="<?php echo esc_attr($option);?>" />
         <p class="description"><?php echo __('Note: If left blank, will use asterisk (*) as default. Only 1 character limit is allowed.', 'wp-keyword-censor'); ?></p><?php
 
     }
@@ -327,11 +313,12 @@ class WPKC_Settings
     /**
      * Display apply changes on the following users field
      * 
+     * @param array $args Field arguments
      * @since 1.0
      */
     public function apply_changes_on_following_users_field_cb($args)
     {
-        // Get the value of the setting we've registered with register_setting()
+        
         $option     = get_option('wpkc_field_apply_changes_on_following_users');
         $logged_in  = isset($option['logged_in']) && !empty($option['logged_in']) ? $option['logged_in'] : ''; 
         $logged_out = isset($option['logged_out']) && !empty($option['logged_out']) ? $option['logged_out'] : ''; ?>
@@ -343,12 +330,11 @@ class WPKC_Settings
         </fieldset>
         <fieldset>
             <label for="wpkc_field_apply_changes_on_following_users_logged_out">
-            <input name="wpkc_field_apply_changes_on_following_users[logged_out]" id="wpkc_field_apply_changes_on_following_users_logged_out" type="checkbox"  <?php checked($logged_out, 'on', true); ?>> <?php echo __('Loggout-out', 'wp-keyword-censor'); ?>
+            <input name="wpkc_field_apply_changes_on_following_users[logged_out]" id="wpkc_field_apply_changes_on_following_users_logged_out" type="checkbox"  <?php checked($logged_out, 'on', true); ?>> <?php echo __('Logged-out', 'wp-keyword-censor'); ?>
             </label>
         </fieldset><?php
 
     }
-    
 
 }
 
