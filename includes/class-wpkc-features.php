@@ -99,7 +99,7 @@ class WPKC_Features
         $keywords = get_option('wpkc_field_keywords');
         $keywords = array_map('trim',explode('|', $keywords));
 
-        $replace_with = $this->replace_keyword_with($keywords);
+        $replace_with = $this->replace_keyword_with($keywords, $title);
         
         $title = $this->case_sensitive($keywords, $replace_with, $title);
           
@@ -125,7 +125,7 @@ class WPKC_Features
         $keywords = get_option('wpkc_field_keywords');
         $keywords = array_map('trim',explode('|', $keywords));
 
-        $replace_with = $this->replace_keyword_with($keywords);
+        $replace_with = $this->replace_keyword_with($keywords, $content);
         
         $content = $this->case_sensitive($keywords, $replace_with, $content);
         
@@ -151,7 +151,7 @@ class WPKC_Features
         $keywords = get_option('wpkc_field_keywords');
         $keywords = array_map('trim',explode('|', $keywords));
 
-        $replace_with = $this->replace_keyword_with($keywords);
+        $replace_with = $this->replace_keyword_with($keywords, $excerpt);
         
         $excerpt = $this->case_sensitive($keywords, $replace_with, $excerpt);
         
@@ -177,7 +177,7 @@ class WPKC_Features
         $keywords = get_option('wpkc_field_keywords');
         $keywords = array_map('trim',explode('|', $keywords));
 
-        $replace_with = $this->replace_keyword_with($keywords);
+        $replace_with = $this->replace_keyword_with($keywords, $comments);
         
         $comments = $this->case_sensitive($keywords, $replace_with, $comments);
         
@@ -190,9 +190,9 @@ class WPKC_Features
     /**
      * Helper function that check whether to use case-sensitive or case-insensitive function
      * 
-     * @param array $keywords Excerpt strings
-     * @param array $replace_with Excerpt strings
-     * @param array $strings The strings to search for
+     * @param array   $keywords Excerpt strings
+     * @param array   $replace_with Excerpt strings
+     * @param string  $strings The strings to search for
      * @since 1.0
      */
     public function case_sensitive($keywords, $replace_with, $strings)
@@ -214,10 +214,11 @@ class WPKC_Features
     /**
      * Helper function that defines the keywords to be rendered
      * 
-     * @param array $keywords Excerpt strings
+     * @param array   $keywords All the keywords to search
+     * @param string  $strings  The strings to search for
      * @since 1.0
      */
-    public function replace_keyword_with($keywords)
+    public function replace_keyword_with($keywords, $strings)
     {
 
       $keyword_rendering  = get_option('wpkc_field_keyword_rendering');
@@ -230,6 +231,9 @@ class WPKC_Features
         foreach($keywords as $keyword){
           $length = strlen($keyword);
           
+          preg_match('/\b' . preg_quote($keyword, '/') . '\b/i', $strings, $matches);
+          $keyword = isset($matches[0]) ? $matches[0] : $keyword;
+
           if($keyword_rendering == 'exclude_first_letter') {
             $replace        = str_repeat($character, $length-1);
             $replace_with[] = substr($keyword, 0, 1) . $replace;
