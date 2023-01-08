@@ -3,7 +3,10 @@ if (!defined('WP_UNINSTALL_PLUGIN')) {
     exit();
 }
 
-if (get_option("wpkc_settings_clean_plugin_options_on_uninstall") == 'yes') {
+$delete_option = get_option("wpkc_field_delete_options");
+$delete_option  = isset($option['delete']) && !empty($option['delete']) ? $option['delete'] : '';
+
+if ($delete_option == 'on') {
 
     global $wpdb;
 

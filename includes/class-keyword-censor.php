@@ -157,6 +157,10 @@ final class Keyword_Censor
         if(get_option('wpkc_field_apply_changes_on_following_users') == ""){
             update_option('wpkc_field_apply_changes_on_following_users', array('logged_in' => 'on', 'logged_out' => 'on'));
         }
+
+        if(get_option('wpkc_field_delete_options') == ""){
+            update_option('wpkc_field_delete_options', array('delete' => 'on'));
+        }
         
     }
 

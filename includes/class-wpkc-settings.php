@@ -9,7 +9,7 @@
 defined('ABSPATH') || exit;
 
 /**
- * WP Settings Class.=
+ * WP Settings Class.
  */
 class WPKC_Settings
 {
@@ -179,6 +179,15 @@ class WPKC_Settings
             'wpkc_settings_section_settings'
         );
 
+        register_setting('keyword_censor_settings', 'wpkc_field_delete_options');
+        add_settings_field(
+            'wpkc_field_delete_options', 
+            __('Delete options on uninstallation', 'wp-keyword-censor'),
+            array($this, 'delete_options_field_cb'),
+            'keyword_censor_settings',
+            'wpkc_settings_section_settings'
+        );
+
     }
     
     /**
@@ -336,6 +345,26 @@ class WPKC_Settings
 
     }
 
+    /**
+     * Display case-sensitive field
+     * 
+     * @param array $args Field arguments
+     * @since 1.0
+     */
+    public function delete_options_field_cb($args)
+    {
+        // Get the value of the setting we've registered with register_setting()
+        $option  = get_option('wpkc_field_delete_options'); 
+        $delete  = isset($option['delete']) && !empty($option['delete']) ? $option['delete'] : ''; ?>
+
+        <fieldset>
+            <label for="wpkc_field_delete_options">
+                <input name="wpkc_field_delete_options[delete]" id="wpkc_field_delete_options" type="checkbox" <?php checked($delete, 'on', true); ?>> <?php echo __('Delete all options in the database when this plugin is uninstalled. This is to avoid unused data in the db.', 'wp-keyword-censor'); ?>
+            </label>
+        </fieldset><?php
+
+    }
+    
 }
 
 new WPKC_Settings();
