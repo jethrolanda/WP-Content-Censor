@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: WP Keyword Censor
- * Description: This plugins censors words or phrase in wordpress contents.
+ * Description: This plugin censors unwanted words or phrase in wordpress contents.
  * Version: 1.0
  * Author: Jethro Landa
  * Author URI: https://jethrolanda.com/
@@ -9,8 +9,6 @@
  * Domain Path: /languages/
  * Requires at least: 5.8
  * Requires PHP: 7.2
- *
- * @package WooCommerce
  */
 
 defined('ABSPATH') || exit;
@@ -20,13 +18,13 @@ if (!defined('WPKC_PLUGIN_FILE')) {
 }
 
 // Include the main Keyword Censor class.
-if (!class_exists('Keyword_Censor', false)) {
-    include_once dirname(WPKC_PLUGIN_FILE) . '/includes/class-keyword-censor.php';
+if (!class_exists('WPKC_Bootstrap', false)) {
+    include_once dirname(WPKC_PLUGIN_FILE) . '/includes/class-wpkc-bootstrap.php';
 }
 
 function wpkc()
 {
-    return Keyword_Censor::instance();
+    return WPKC_Bootstrap::instance();
 }
 
 // Global for backwards compatibility.

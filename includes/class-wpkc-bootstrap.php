@@ -10,7 +10,7 @@ defined('ABSPATH') || exit;
 /**
  * Main Class.
  */
-final class Keyword_Censor
+final class WPKC_Bootstrap
 {
 
     /**
