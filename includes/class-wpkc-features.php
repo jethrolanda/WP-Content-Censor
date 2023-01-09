@@ -200,12 +200,24 @@ class WPKC_Features
 
       $sensitive  = get_option('wpkc_field_case_sensitive');
       $sensitive  = isset($sensitive['sensitive']) && !empty($sensitive['sensitive']) ? $sensitive['sensitive'] : '';
+      $search     = get_option('keyword_search_field_cb');
+      $kw         = array();
 
-      if($sensitive == 'on'){
-        $strings = str_replace($keywords, $replace_with, $strings);
-      } else {
-        $strings = str_ireplace($keywords, $replace_with, $strings);
+      foreach($keywords as $keyword){
+        $regex = '';
+        if($search == 'part_keyword'){
+          $regex = "/{$keyword}/";
+        } else {
+          $regex = "/\b{$keyword}\b/";
+        }
+
+        if($sensitive !== 'on'){
+          $regex .= "i" ;
+        }
+        $kw[] = $regex;
       }
+
+      $strings = preg_replace($kw, $replace_with, $strings);
       
       return $strings;
 

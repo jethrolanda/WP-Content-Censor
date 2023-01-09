@@ -152,10 +152,20 @@ class WPKC_Settings
             'wpkc_settings_section_settings'
         );
 
+        
+        register_setting('keyword_censor_settings', 'keyword_search_field_cb');
+        add_settings_field(
+            'keyword_search_field_cb', 
+            __('Keyword search', 'wp-keyword-censor'),
+            array($this, 'keyword_search_field_cb'),
+            'keyword_censor_settings',
+            'wpkc_settings_section_settings'
+        );
+
         register_setting('keyword_censor_settings', 'wpkc_field_keyword_rendering');
         add_settings_field(
             'wpkc_field_keyword_rendering', 
-            __('Keyword Rendering', 'wp-keyword-censor'),
+            __('Keyword rendering', 'wp-keyword-censor'),
             array($this, 'keyword_rendering_field_cb'),
             'keyword_censor_settings',
             'wpkc_settings_section_settings'
@@ -272,7 +282,29 @@ class WPKC_Settings
 
         <fieldset>
             <label for="wpkc_field_case_sensitive">
-                <input name="wpkc_field_case_sensitive[sensitive]" id="wpkc_field_case_sensitive" type="checkbox" <?php checked($sensitive, 'on', true); ?>> <?php echo __('Restrictly match the keywords.', 'wp-keyword-censor'); ?>
+                <input name="wpkc_field_case_sensitive[sensitive]" id="wpkc_field_case_sensitive" type="checkbox" <?php checked($sensitive, 'on', true); ?>> <?php echo __('Restrictly match the keyword(s) casing.', 'wp-keyword-censor'); ?>
+            </label>
+        </fieldset><?php
+
+    }
+
+    /**
+     * Display keyword rendering field
+     * 
+     * @param array $args Field arguments
+     * @since 1.0
+     */
+    public function keyword_search_field_cb($args)
+    {
+        
+        $option = get_option('keyword_search_field_cb'); ?>
+
+        <fieldset>
+            <label>
+                <input type="radio" name="keyword_search_field_cb" value="part_keyword" <?php checked($option, 'part_keyword', true); ?>> <?php echo __('Part of keyword or phrase', 'wp-keyword-censor'); ?>
+            </label><br>
+            <label>
+                <input type="radio" name="keyword_search_field_cb" value="exact_keyword" <?php checked($option, 'exact_keyword', true); ?>> <?php echo __('Exact keyword or phrase', 'wp-keyword-censor'); ?>
             </label>
         </fieldset><?php
 

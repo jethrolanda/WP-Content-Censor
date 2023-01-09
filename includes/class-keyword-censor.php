@@ -142,23 +142,27 @@ final class Keyword_Censor
             );
         }
         
-        if(get_option('wpkc_field_case_sensitive') == ""){
+        if(!get_option('wpkc_field_case_sensitive')){
             update_option('wpkc_field_case_sensitive', array('sensitive' => 'on'));
         }
         
-        if(get_option('wpkc_field_keyword_rendering') == ""){
+        if(!get_option('keyword_search_field_cb')){
+            update_option('keyword_search_field_cb', 'part_keyword');
+        }
+
+        if(!get_option('wpkc_field_keyword_rendering')){
             update_option('wpkc_field_keyword_rendering', 'replace_all');
         }
 
-        if(get_option('wpkc_field_replace_keyword_with') == ""){
+        if(!get_option('wpkc_field_replace_keyword_with')){
             update_option('wpkc_field_replace_keyword_with', '*');
         }
 
-        if(get_option('wpkc_field_apply_changes_on_following_users') == ""){
+        if(!get_option('wpkc_field_apply_changes_on_following_users')){
             update_option('wpkc_field_apply_changes_on_following_users', array('logged_in' => 'on', 'logged_out' => 'on'));
         }
 
-        if(get_option('wpkc_field_delete_options') == ""){
+        if(!get_option('wpkc_field_delete_options')){
             update_option('wpkc_field_delete_options', array('delete' => 'on'));
         }
         
