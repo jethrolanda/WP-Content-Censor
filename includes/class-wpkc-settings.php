@@ -301,10 +301,10 @@ class WPKC_Settings
 
         <fieldset>
             <label>
-                <input type="radio" name="keyword_search_field_cb" value="part_keyword" <?php checked($option, 'part_keyword', true); ?>> <?php echo __('Part of keyword or phrase', 'wp-keyword-censor'); ?>
+                <input type="radio" name="keyword_search_field_cb" value="part_keyword" <?php checked($option, 'part_keyword', true); ?>> <?php echo __('Censor part of word or phrase (ex. Keyword: come, Result: Wel**** to wordpress.)', 'wp-keyword-censor'); ?>
             </label><br>
             <label>
-                <input type="radio" name="keyword_search_field_cb" value="exact_keyword" <?php checked($option, 'exact_keyword', true); ?>> <?php echo __('Exact keyword or phrase', 'wp-keyword-censor'); ?>
+                <input type="radio" name="keyword_search_field_cb" value="exact_keyword" <?php checked($option, 'exact_keyword', true); ?>> <?php echo __('Censor exact word or phrase (ex. Keyword: come, Result: Welcome to wordpress.). Notice that it didn\'t censor come, this option will only censor if its the exact word or phrase.', 'wp-keyword-censor'); ?>
             </label>
         </fieldset><?php
 
