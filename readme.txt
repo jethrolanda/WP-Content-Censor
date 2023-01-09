@@ -28,4 +28,4 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Upgrade notice ==
 
-There is a new version of WooCommerce Wholesale Prices available.
+There is a new version of WP Keyword Censor available.
