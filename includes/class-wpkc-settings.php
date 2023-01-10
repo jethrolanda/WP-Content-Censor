@@ -59,8 +59,8 @@ class WPKC_Settings
     public function custom_menu()
     {
         add_menu_page(
-            'Keyword Censor Settings',
-            'Keyword Censor',
+            __('Keyword Censor Settings', 'wp-keyword-censor'),
+            __('Keyword Censor', 'wp-keyword-censor'),
             'edit_posts',
             'keyword_censor_settings',
             array($this, 'keyword_censor_settings_page'),

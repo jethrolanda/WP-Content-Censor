@@ -1,0 +1,143 @@
+# Copyright (C) 2023 Jethro Landa
+# This file is distributed under the same license as the WP Keyword Censor plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Keyword Censor 1.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-keyword-censor\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2023-01-10T08:28:16+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.4.0\n"
+"X-Domain: wp-keyword-censor\n"
+
+#. Plugin Name of the plugin
+msgid "WP Keyword Censor"
+msgstr ""
+
+#. Description of the plugin
+msgid "This plugin censors unwanted words or phrase in wordpress contents."
+msgstr ""
+
+#. Author of the plugin
+msgid "Jethro Landa"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://jethrolanda.com/"
+msgstr ""
+
+#: includes/class-wpkc-settings.php:62
+msgid "Keyword Censor Settings"
+msgstr ""
+
+#: includes/class-wpkc-settings.php:63
+msgid "Keyword Censor"
+msgstr ""
+
+#: includes/class-wpkc-settings.php:90
+msgid "Settings Saved"
+msgstr ""
+
+#: includes/class-wpkc-settings.php:106
+msgid "Save Settings"
+msgstr ""
+
+#: includes/class-wpkc-settings.php:131
+msgid "Keywords"
+msgstr ""
+
+#: includes/class-wpkc-settings.php:140
+msgid "Content to filter"
+msgstr ""
+
+#: includes/class-wpkc-settings.php:149
+msgid "Case-sensitive"
+msgstr ""
+
+#: includes/class-wpkc-settings.php:159
+msgid "Keyword search"
+msgstr ""
+
+#: includes/class-wpkc-settings.php:168
+msgid "Keyword rendering"
+msgstr ""
+
+#: includes/class-wpkc-settings.php:177
+msgid "Replace keyword with"
+msgstr ""
+
+#: includes/class-wpkc-settings.php:186
+msgid "Apply the changes on the following users"
+msgstr ""
+
+#: includes/class-wpkc-settings.php:195
+msgid "Delete options on uninstallation"
+msgstr ""
+
+#: includes/class-wpkc-settings.php:228
+msgid "Ex: Pussy | Dog"
+msgstr ""
+
+#: includes/class-wpkc-settings.php:229
+msgid "Note: This will only censor words that is saved in the database and will not include the hard coded text in theme or plugin files."
+msgstr ""
+
+#: includes/class-wpkc-settings.php:250
+msgid "Title"
+msgstr ""
+
+#: includes/class-wpkc-settings.php:255
+msgid "Content"
+msgstr ""
+
+#: includes/class-wpkc-settings.php:260
+msgid "Excerpt"
+msgstr ""
+
+#: includes/class-wpkc-settings.php:265
+msgid "Comments"
+msgstr ""
+
+#: includes/class-wpkc-settings.php:285
+msgid "Restrictly match the keyword(s) casing."
+msgstr ""
+
+#: includes/class-wpkc-settings.php:304
+msgid "Censor part of word or phrase (ex. Keyword: come, Result: Wel**** to wordpress.)"
+msgstr ""
+
+#: includes/class-wpkc-settings.php:307
+msgid "Censor exact word or phrase (ex. Keyword: come, Result: Welcome to wordpress.). Notice that it didn't censor come, this option will only censor if its the exact word or phrase."
+msgstr ""
+
+#: includes/class-wpkc-settings.php:326
+msgid "Replace all words (ex. Cloudy = ******)"
+msgstr ""
+
+#: includes/class-wpkc-settings.php:329
+msgid "Exclude first letter (ex. Cloudy = C*****)"
+msgstr ""
+
+#: includes/class-wpkc-settings.php:332
+msgid "Exclude first and last letter (ex. Cloudy = C****y)"
+msgstr ""
+
+#: includes/class-wpkc-settings.php:350
+msgid "Note: If left blank, will use asterisk (*) as default. Only 1 character limit is allowed."
+msgstr ""
+
+#: includes/class-wpkc-settings.php:369
+msgid "Logged-in"
+msgstr ""
+
+#: includes/class-wpkc-settings.php:374
+msgid "Logged-out"
+msgstr ""
+
+#: includes/class-wpkc-settings.php:394
+msgid "Delete all options in the database when this plugin is uninstalled. This is to avoid unused data in the db."
+msgstr ""
