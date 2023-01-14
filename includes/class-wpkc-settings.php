@@ -153,11 +153,11 @@ class WPKC_Settings
         );
 
         
-        register_setting('keyword_censor_settings', 'keyword_search_field_cb');
+        register_setting('keyword_censor_settings', 'keyword_match_field_cb');
         add_settings_field(
-            'keyword_search_field_cb', 
-            __('Keyword search', 'wp-keyword-censor'),
-            array($this, 'keyword_search_field_cb'),
+            'keyword_match_field', 
+            __('Keyword match', 'wp-keyword-censor'),
+            array($this, 'keyword_match_field_cb'),
             'keyword_censor_settings',
             'wpkc_settings_section_settings'
         );
@@ -294,17 +294,17 @@ class WPKC_Settings
      * @param array $args Field arguments
      * @since 1.0
      */
-    public function keyword_search_field_cb($args)
+    public function keyword_match_field_cb($args)
     {
         
-        $option = get_option('keyword_search_field_cb'); ?>
+        $option = get_option('keyword_match_field'); ?>
 
         <fieldset>
             <label>
-                <input type="radio" name="keyword_search_field_cb" value="part_keyword" <?php checked($option, 'part_keyword', true); ?>> <?php echo __('Censor part of word or phrase (ex. Keyword: come, Result: Wel**** to wordpress.)', 'wp-keyword-censor'); ?>
+                <input type="radio" name="keyword_match_field" value="part_keyword" <?php checked($option, 'part_keyword', true); ?>> <?php echo __('Censor part of word or phrase (ex. Keyword: come, Result: Wel**** to wordpress.)', 'wp-keyword-censor'); ?>
             </label><br>
             <label>
-                <input type="radio" name="keyword_search_field_cb" value="exact_keyword" <?php checked($option, 'exact_keyword', true); ?>> <?php echo __('Censor exact word or phrase (ex. Keyword: come, Result: Welcome to wordpress.). Notice that it didn\'t censor come, this option will only censor if its the exact word or phrase.', 'wp-keyword-censor'); ?>
+                <input type="radio" name="keyword_match_field" value="exact_keyword" <?php checked($option, 'exact_keyword', true); ?>> <?php echo __('Censor exact word or phrase (ex. Keyword: come, Result: Welcome to wordpress.). Notice that it didn\'t censor come, this option will only censor if its the exact word or phrase.', 'wp-keyword-censor'); ?>
             </label>
         </fieldset><?php
 

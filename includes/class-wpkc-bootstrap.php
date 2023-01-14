@@ -146,8 +146,8 @@ final class WPKC_Bootstrap
             update_option('wpkc_field_case_sensitive', array('sensitive' => 'on'));
         }
         
-        if(!get_option('keyword_search_field_cb')){
-            update_option('keyword_search_field_cb', 'part_keyword');
+        if(!get_option('keyword_match_field')){
+            update_option('keyword_match_field', 'part_keyword');
         }
 
         if(!get_option('wpkc_field_keyword_rendering')){
